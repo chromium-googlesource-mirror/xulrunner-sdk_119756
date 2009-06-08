@@ -62,6 +62,11 @@ public:
   typedef PRUint32   size_type;
   typedef PRUint32   index_type;
 
+// Force BeginReading into using PRUint16s instead of wchar_t on Windows.
+// This avoids errors when linking from a project compiled with /Zc:wchar_t.
+#if defined(WIN32)
+#define char_type PRUint16
+#endif
   /**
    * Returns the length, beginning, and end of a string in one operation.
    */
@@ -70,6 +75,9 @@ public:
 
   NS_HIDDEN_(const char_type*) BeginReading() const;
   NS_HIDDEN_(const char_type*) EndReading() const;
+#if defined(WIN32)
+#undef char_type
+#endif
 
   NS_HIDDEN_(char_type) CharAt(PRUint32 aPos) const
   {
@@ -785,7 +793,11 @@ public:
 
   const char_type* get() const
   {
+#if defined(WIN32)
+    return reinterpret_cast<const char_type*>(BeginReading());
+#else
     return BeginReading();
+#endif
   }
 
   self_type& operator=(const self_type& aString)              { Assign(aString);   return *this; }
