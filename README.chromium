@@ -3,7 +3,7 @@ Short Name: xulrunner-sdk
 URL: https://developer.mozilla.org/en/Gecko_SDK
 Version: 1.9.0.5
 License: MOZILLA PUBLIC LICENSE Version 1.1
-License File: win\bin\LICENSE
+License File: win/bin/LICENSE
 
 Description:
 Gecko SDK for developing XPCOM components.
